@@ -1,4 +1,4 @@
-import { App } from 'aws-cdk-lib';
+import { App } from '@aws-cdk/core';
 import { SpaceStack } from "./SpaceStack";
 
 const app = new App();
