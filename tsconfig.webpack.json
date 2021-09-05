@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2019",
+    "rootDirs": ["./services", "./infrastructure"],
+    "esModuleInterop": true
+  }
+}
