@@ -26,7 +26,7 @@ export class SpaceStack extends Stack {
     });
 
     // Hello Api lamda integration:
-    const helloLamdaIntegration = new LambdaIntegration(helloLamda);
+    const helloLamdaIntegration = new LambdaIntegration(helloLamdaWebpack);
     const helloLamdaResource = this.api.root.addResource('hello');
     helloLamdaResource.addMethod('GET', helloLamdaIntegration);
 
