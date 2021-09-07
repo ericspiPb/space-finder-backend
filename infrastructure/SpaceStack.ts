@@ -2,6 +2,7 @@ import { Construct, Stack, StackProps } from '@aws-cdk/core';
 import { Code, Function as LamdaFunction, Runtime } from '@aws-cdk/aws-lambda';
 import { LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
+import { PolicyStatement } from '@aws-cdk/aws-iam';
 
 import { GenericTable } from './GenericTable';
 
@@ -24,6 +25,12 @@ export class SpaceStack extends Stack {
       code: Code.fromAsset('build/nodeHelloLambda'),
       handler: 'nodeHelloLambda.handler',
     });
+
+    // add list buckets policy
+    const s3ListPolicy = new PolicyStatement();
+    s3ListPolicy.addActions('s3:ListAllMyBuckets');
+    s3ListPolicy.addResources('*');
+    helloLamdaWebpack.addToRolePolicy(s3ListPolicy);
 
     // Hello Api lamda integration:
     const helloLamdaIntegration = new LambdaIntegration(helloLamdaWebpack);

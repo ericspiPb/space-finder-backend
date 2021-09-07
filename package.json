@@ -20,10 +20,14 @@
   "dependencies": {
     "@aws-cdk/aws-apigateway": "^1.121.0",
     "@aws-cdk/aws-dynamodb": "^1.121.0",
+    "@aws-cdk/aws-iam": "^1.121.0",
     "@aws-cdk/aws-lambda": "^1.121.0",
     "@aws-cdk/aws-lambda-nodejs": "^1.121.0",
+    "@aws-cdk/aws-s3": "^1.121.0",
     "@aws-cdk/core": "^1.121.0",
+    "@aws-sdk/client-s3": "^3.29.0",
     "@types/uuid": "^8.3.1",
+    "aws-crt": "^1.9.1",
     "uuid": "^8.3.2"
   }
 }
