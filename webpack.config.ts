@@ -10,7 +10,6 @@ const config: Configuration = {
   module: {
     rules: [
       {
-        include: resolve(__dirname),
         exclude: /node_modules/,
         use: {
           loader: 'ts-loader',
@@ -22,7 +21,7 @@ const config: Configuration = {
     ],
   },
   externals: {
-    '@aws-cdk/core': '@aws-cdk/core',
+    
   },
   resolve: {
     extensions: ['.ts', '.js'],
