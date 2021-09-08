@@ -14,33 +14,36 @@ export class SpaceStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
+    // using js
     const helloLamda = new LamdaFunction(this, 'helloLamda', {
       runtime: Runtime.NODEJS_14_X,
       code: Code.fromAsset('services/hello'),
       handler: 'hello.main',
     });
 
+    // using webpack
     const helloLamdaWebpack = new LamdaFunction(this, 'helloLamdaWebpack', {
       runtime: Runtime.NODEJS_14_X,
       code: Code.fromAsset('build/nodeHelloLambda'),
       handler: 'nodeHelloLambda.handler',
     });
 
-    // add list buckets policy
-    const s3ListPolicy = new PolicyStatement();
-    s3ListPolicy.addActions('s3:ListAllMyBuckets');
-    s3ListPolicy.addResources('*');
-    helloLamdaWebpack.addToRolePolicy(s3ListPolicy);
-
-    // Hello Api lamda integration:
-    const helloLamdaIntegration = new LambdaIntegration(helloLamdaWebpack);
-    const helloLamdaResource = this.api.root.addResource('hello');
-    helloLamdaResource.addMethod('GET', helloLamdaIntegration);
-
+    // using typescript
     const helloLambdaNodejs = new NodejsFunction(this, 'helloLamdaNodeJs', {
       entry: 'services/node-lambda/hello.ts',
       handler: 'handler',
     });
+
+    // add list buckets policy
+    const s3ListPolicy = new PolicyStatement();
+    s3ListPolicy.addActions('s3:ListAllMyBuckets');
+    s3ListPolicy.addResources('*');
+    helloLambdaNodejs.addToRolePolicy(s3ListPolicy);
+
+    // Hello Api lamda integration:
+    const helloLamdaIntegration = new LambdaIntegration(helloLambdaNodejs);
+    const helloLamdaResource = this.api.root.addResource('hello');
+    helloLamdaResource.addMethod('GET', helloLamdaIntegration);
   }
 
 }
