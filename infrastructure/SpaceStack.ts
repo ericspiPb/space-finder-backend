@@ -9,7 +9,11 @@ import { GenericTable } from './GenericTable';
 export class SpaceStack extends Stack {
 
   private api = new RestApi(this, 'SpaceApi');
-  private spacesTable = new GenericTable(this, 'SpacesTable', 'spaceId');
+  private spacesTable = new GenericTable(this, {
+    tableName: 'SpacesTable',
+    primaryKey: 'spaceId',
+    createLambdaPath: 'create',
+  });
 
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -40,10 +44,14 @@ export class SpaceStack extends Stack {
     s3ListPolicy.addResources('*');
     helloLambdaNodejs.addToRolePolicy(s3ListPolicy);
 
-    // Hello Api lamda integration:
+    // Hello Api lamda integration
     const helloLamdaIntegration = new LambdaIntegration(helloLambdaNodejs);
     const helloLamdaResource = this.api.root.addResource('hello');
     helloLamdaResource.addMethod('GET', helloLamdaIntegration);
+
+    // Spaces API integrations
+    const spaceResource = this.api.root.addResource('spaces');
+    spaceResource.addMethod('POST', this.spacesTable.createLambdaIntegration);
   }
 
 }

@@ -1,4 +1,4 @@
-import { APIGatewayEventDefaultAuthorizerContext, APIGatewayEventRequestContextWithAuthorizer, APIGatewayProxyEvent, Context } from 'aws-lambda';
+import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { handler } from '../../services/SpacesTable/create';
 
 const event = {
