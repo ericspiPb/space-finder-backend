@@ -75,7 +75,7 @@ export class GenericTable {
     }
 
     if (this.readLambda) {
-      this.table.grantWriteData(this.readLambda);
+      this.table.grantReadData(this.readLambda);
     }
 
     if (this.updateLambda) {
