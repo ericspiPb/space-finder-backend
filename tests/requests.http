@@ -13,7 +13,7 @@ POST {{endpoint}}/spaces
 Content-Type: application/json
 
 {
-  "location": "Londan",
+  "location": "London",
   "name": "Best location"
 }
 ###

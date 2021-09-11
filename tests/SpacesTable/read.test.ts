@@ -13,7 +13,7 @@ handler(event, {} as Context).then((apiResult) => {
 
 const locEvent = {
   queryStringParameters: {
-    location: 'Londan',
+    location: 'London',
   },
 } as unknown as APIGatewayProxyEvent
 
