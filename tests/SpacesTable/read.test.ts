@@ -10,3 +10,13 @@ const event = {
 handler(event, {} as Context).then((apiResult) => {
   const items = JSON.parse(apiResult.body);
 });
+
+const locEvent = {
+  queryStringParameters: {
+    location: 'Londan',
+  },
+} as unknown as APIGatewayProxyEvent
+
+handler(locEvent, {} as Context).then((apiResult) => {
+  const items = JSON.parse(apiResult.body);
+});
