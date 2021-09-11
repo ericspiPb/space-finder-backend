@@ -3,12 +3,6 @@
 GET {{endpoint}}/hello
 ###
 
-GET {{endpoint}}/spaces?spaceId=023669d0-2141-4b49-8811-ffac4b96226d
-###
-
-GET {{endpoint}}/spaces?location=London
-###
-
 POST {{endpoint}}/spaces
 Content-Type: application/json
 
@@ -16,4 +10,24 @@ Content-Type: application/json
   "location": "London",
   "name": "Best location"
 }
+###
+
+GET {{endpoint}}/spaces
+###
+
+GET {{endpoint}}/spaces?spaceId=e8671472-59b8-4ccb-b244-1a328f05d8f0
+###
+
+GET {{endpoint}}/spaces?location=London
+###
+
+PUT {{endpoint}}/spaces?spaceId=e8671472-59b8-4ccb-b244-1a328f05d8f0
+Content-Type: application/json
+
+{
+  "location": "Updated London"
+}
+###
+
+DELETE {{endpoint}}/spaces?spaceId=087c449c-86d7-44e9-9608-e8e40d11722a
 ###
