@@ -2,7 +2,9 @@ import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { handler } from '../../services/SpacesTable/create';
 
 const event = {
-  body: `{ "location": "Paris" }`,
-} as APIGatewayProxyEvent;
+  body: {
+    name: 'paris',
+  },
+} as unknown as APIGatewayProxyEvent;
 
 handler(event, {} as Context);
