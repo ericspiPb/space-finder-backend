@@ -1,10 +1,11 @@
 import { Construct, Stack, StackProps } from '@aws-cdk/core';
 import { Code, Function as LamdaFunction, Runtime } from '@aws-cdk/aws-lambda';
-import { LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway';
+import { AuthorizationType, LambdaIntegration, MethodOptions, RestApi } from '@aws-cdk/aws-apigateway';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 
 import { GenericTable } from './GenericTable';
+import { AuthorizerWrapper } from './AuthorizerWrapper';
 
 export class SpaceStack extends Stack {
 
@@ -18,9 +19,10 @@ export class SpaceStack extends Stack {
     updateLambdaPath: 'update',
     deleteLambdaPath: 'delete',
   });
+  private authorizer: AuthorizerWrapper;
 
   constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
+    super(scope, id, props);    
 
     // using js
     const helloLamda = new LamdaFunction(this, 'helloLamda', {
@@ -51,10 +53,19 @@ export class SpaceStack extends Stack {
     // Hello Api lamda integration
     const helloLamdaIntegration = new LambdaIntegration(helloLambdaNodejs);
     const helloLamdaResource = this.api.root.addResource('hello');
-    helloLamdaResource.addMethod('GET', helloLamdaIntegration);
+    const spaceResource = this.api.root.addResource('spaces');
+    
+    this.authorizer = new AuthorizerWrapper(this, this.api);
+    const optionsWithAuthorizer: MethodOptions = {
+      authorizationType: AuthorizationType.COGNITO,
+      authorizer: {
+        authorizerId: this.authorizer.authorizer.authorizerId,
+      },
+    };
+
+    helloLamdaResource.addMethod('GET', helloLamdaIntegration, optionsWithAuthorizer);
 
     // Spaces API integrations
-    const spaceResource = this.api.root.addResource('spaces');
     spaceResource.addMethod('POST', this.spacesTable.createLambdaIntegration);
     spaceResource.addMethod('GET', this.spacesTable.readLambdaIntegration);
     spaceResource.addMethod('PUT', this.spacesTable.updateLambdaIntegration);

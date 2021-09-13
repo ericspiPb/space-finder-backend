@@ -1,8 +1,7 @@
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway';
+import { LambdaIntegration } from '@aws-cdk/aws-apigateway';
 import { Stack } from '@aws-cdk/core';
-import { join } from 'path';
 
 export interface TableProps {
   tableName: string;
