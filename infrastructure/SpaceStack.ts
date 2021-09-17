@@ -51,10 +51,6 @@ export class SpaceStack extends Stack {
     helloLambdaNodejs.addToRolePolicy(s3ListPolicy);
 
     // Hello Api lamda integration
-    const helloLamdaIntegration = new LambdaIntegration(helloLambdaNodejs);
-    const helloLamdaResource = this.api.root.addResource('hello');
-    const spaceResource = this.api.root.addResource('spaces');
-    
     this.authorizer = new AuthorizerWrapper(this, this.api);
     const optionsWithAuthorizer: MethodOptions = {
       authorizationType: AuthorizationType.COGNITO,
@@ -63,9 +59,13 @@ export class SpaceStack extends Stack {
       },
     };
 
+    const helloLamdaIntegration = new LambdaIntegration(helloLambdaNodejs);
+    const helloLamdaResource = this.api.root.addResource('hello');
+
     helloLamdaResource.addMethod('GET', helloLamdaIntegration, optionsWithAuthorizer);
 
     // Spaces API integrations
+    const spaceResource = this.api.root.addResource('spaces');
     spaceResource.addMethod('POST', this.spacesTable.createLambdaIntegration);
     spaceResource.addMethod('GET', this.spacesTable.readLambdaIntegration);
     spaceResource.addMethod('PUT', this.spacesTable.updateLambdaIntegration);

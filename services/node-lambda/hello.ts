@@ -1,7 +1,7 @@
 import * as uuid from 'uuid';
 import { S3 } from "aws-sdk";
 
-const s3Client = new S3({ region: 'ap-east-1' });
+const s3Client = new S3({ region: 'ap-southeast-1' });
 
 async function handler(event: any, context: any) {
   // aws sdk v2 method

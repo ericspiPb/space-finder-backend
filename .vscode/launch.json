@@ -7,6 +7,23 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Auth",
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "./tests/Auth/auth.test.ts"
+      ],
+      "env": {
+        "AWS_REGION": "ap-southeast-1",
+        "TABLE_NAME": "SpacesTable",
+        "PRIMARY_KEY": "spaceId"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch File",
       "runtimeArgs": [
         "-r",
@@ -16,10 +33,10 @@
         "${relativeFile}"
       ],
       "env": {
-        // "AWS_REGION": "ap-east-1",
+        "AWS_REGION": "ap-southeast-1",
         "TABLE_NAME": "SpacesTable",
         "PRIMARY_KEY": "spaceId"
       }
-    }
+    },
   ]
 }
